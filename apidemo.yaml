@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  frontend:
+    image: napi
+    ports:
+     - "3010:3010"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 1
+        window: 120s
